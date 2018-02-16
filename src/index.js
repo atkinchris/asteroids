@@ -1,23 +1,19 @@
+import { Application } from 'pixi.js'
+
 import Ship from './ship'
 
-const canvas = document.querySelector('.container')
+const width = window.innerWidth
+const height = window.innerHeight
 
-const sketch = (p) => {
-  const width = window.innerWidth
-  const height = window.innerHeight
+const app = new Application(width, height, { antialias: true })
+document.body.appendChild(app.view)
 
-  let ship
+const ship = new Ship(width / 2, height / 2)
 
-  p.setup = () => {
-    p.createCanvas(width, height)
-    ship = new Ship(p)
-  }
+app.stage.addChild(ship)
 
-  p.draw = () => {
-    p.background('black')
-    ship.update()
-    ship.draw()
-  }
-}
+app.ticker.add((delta) => {
+  ship.update(delta)
 
-new p5(sketch, canvas) // eslint-disable-line no-new
+  if (ship.y < 0) ship.y = app.stage.height
+})

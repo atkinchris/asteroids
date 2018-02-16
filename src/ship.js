@@ -1,49 +1,37 @@
+import { Graphics, Point } from 'pixi.js'
+
+import { COLOUR_ORANGE } from './constants'
+
 const vertices = [
-  { x: 5, y: 3 },
-  { x: 15, y: 5 },
-  { x: 0, y: -30 },
-  { x: -15, y: 5 },
-  { x: -5, y: 3 },
-  { x: -5, y: 20 },
-  { x: 5, y: 20 },
+  0, 0,
+  15, 35,
+  5, 33,
+  5, 50,
+  -5, 50,
+  -5, 33,
+  -15, 35,
+  0, 0,
 ]
 
-class Ship {
-  constructor(p) {
-    this.p = p
+class Ship extends Graphics {
+  constructor(x, y) {
+    super()
 
-    this.position = p.createVector(p.width / 2, p.height / 2)
-    this.rotation = 0
+    this.x = x
+    this.y = y
+    this.vx = 0
+    this.vy = 0
+
+    this.rotation = -0.4
+
+    this.lineStyle(2, COLOUR_ORANGE, 1)
+    this.drawPolygon(vertices)
+    this.pivot = new Point(0, 25)
   }
 
-  update() {
-    const { p, position } = this
-    const mouseAngle = Math.atan2(
-      p.mouseY - position.y,
-      p.mouseX - position.x,
-    )
-
-    this.rotation = mouseAngle + p.HALF_PI
-  }
-
-  draw() {
-    const { p, position, rotation } = this
-
-    p.push()
-    p.translate(position.x, position.y)
-    p.rotate(rotation)
-    p.fill('black')
-    p.stroke('#ff9900')
-
-    p.beginShape()
-    vertices.forEach(v => p.vertex(v.x, v.y))
-    p.endShape(p.CLOSE)
-
-    if (p.mouseIsPressed) {
-      p.line(0, -30, 0, -200)
-    }
-
-    p.pop()
+  update(delta) {
+    this.x += this.vx * delta
+    this.y -= this.vy * delta
   }
 }
 
