@@ -32,6 +32,9 @@ const common = {
         fallback: 'style-loader',
         use: ['css-loader'],
       }),
+    }, {
+      test: /\.(vert|frag)$/,
+      use: 'raw-loader',
     }],
   },
   resolve: {
@@ -41,6 +44,10 @@ const common = {
     new ExtractTextPlugin('[name].[contenthash:8].css'),
     new HtmlWebpackPlugin({ template: path.join(paths.SRC, 'index.html') }),
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      CANVAS_RENDERER: JSON.stringify(true),
+      WEBGL_RENDERER: JSON.stringify(true),
+    }),
   ],
 }
 
