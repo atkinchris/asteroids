@@ -1,68 +1,49 @@
+const vertices = [
+  { x: 5, y: 3 },
+  { x: 15, y: 5 },
+  { x: 0, y: -30 },
+  { x: -15, y: 5 },
+  { x: -5, y: 3 },
+  { x: -5, y: 20 },
+  { x: 5, y: 20 },
+]
+
 class Ship {
   constructor(p) {
-    this.pos = p.createVector(p.width / 2, p.height / 2)
-    this.r = 20
-    this.heading = 0
-    this.rotation = 0
-    this.vel = p.createVector(0, 0)
-    this.isBoosting = false
     this.p = p
-  }
 
-  boosting(isBoosting) {
-    this.isBoosting = isBoosting
+    this.position = p.createVector(p.width / 2, p.height / 2)
+    this.rotation = 0
   }
 
   update() {
-    if (this.isBoosting) {
-      this.boost()
+    const { p, position } = this
+    const mouseAngle = Math.atan2(
+      p.mouseY - position.y,
+      p.mouseX - position.x,
+    )
+
+    this.rotation = mouseAngle + p.HALF_PI
+  }
+
+  draw() {
+    const { p, position, rotation } = this
+
+    p.push()
+    p.translate(position.x, position.y)
+    p.rotate(rotation)
+    p.fill('black')
+    p.stroke('#ff9900')
+
+    p.beginShape()
+    vertices.forEach(v => p.vertex(v.x, v.y))
+    p.endShape(p.CLOSE)
+
+    if (p.mouseIsPressed) {
+      p.line(0, -30, 0, -200)
     }
 
-    this.pos.add(this.vel)
-    this.vel.mult(0.99)
-  }
-
-  boost() {
-    const force = p5.Vector.fromAngle(this.heading)
-    force.mult(0.1)
-    this.vel.add(force)
-  }
-
-  hits(asteroid) {
-    const d = this.p.dist(this.pos.x, this.pos.y, asteroid.pos.x, asteroid.pos.y)
-
-    return d < this.r + asteroid.r
-  }
-
-  render() {
-    this.p.push()
-    this.p.translate(this.pos.x, this.pos.y)
-    this.p.rotate(this.heading + this.p.HALF_PI)
-    this.p.fill(0)
-    this.p.stroke(255)
-    this.p.triangle(-this.r, this.r, this.r, this.r, 0, -this.r)
-    this.p.pop()
-  }
-
-  edges() {
-    if (this.pos.x > this.p.width + this.r) {
-      this.pos.x = -this.r
-    } else if (this.pos.x < -this.r) {
-      this.pos.x = this.p.width + this.r
-    }
-    if (this.pos.y > this.p.height + this.r) {
-      this.pos.y = -this.r
-    } else if (this.pos.y < -this.r) {
-      this.pos.y = this.p.height + this.r
-    }
-  }
-
-  setRotation(a) {
-    this.rotation = a
-  }
-
-  turn() {
-    this.heading += this.rotation
+    p.pop()
   }
 }
 
