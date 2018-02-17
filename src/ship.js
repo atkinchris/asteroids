@@ -24,9 +24,10 @@ class Ship extends Graphics {
     this.x = x
     this.y = y
     this.velocity = new Vector()
-    this.acceleration = new Vector(0, -1)
-    this.maxSpeed = 3
-    this.turningSpeed = 0.1
+    this.acceleration = 0.5
+    this.maxSpeed = 4
+    this.turningSpeed = 0.075
+    this.breakingSpeed = 0.1
 
     this.rotation = -0.4
 
@@ -44,7 +45,7 @@ class Ship extends Graphics {
       this.rotation += this.turningSpeed * delta
     }
 
-    const rotatedAccel = this.acceleration.clone()
+    const rotatedAccel = new Vector(0, -this.acceleration)
     rotatedAccel.setDirection(this.rotation - (Math.PI / 2))
 
     if (keys.up) {
@@ -52,7 +53,8 @@ class Ship extends Graphics {
     }
 
     if (keys.down) {
-      this.velocity.setMagnitude(this.velocity.getMagnitude() * 0.9)
+      const newMag = this.velocity.getMagnitude() - this.breakingSpeed
+      this.velocity.setMagnitude(newMag)
     }
 
     if (this.velocity.getMagnitude() > this.maxSpeed) {
