@@ -1,28 +1,27 @@
 import { Graphics, Point } from 'pixi.js'
 
-import { COLOUR_ORANGE } from './constants'
+import { COLOUR_ORANGE, COLOUR_BLACK } from './constants'
 import bindKeys from './utils/input'
 import Vector from './utils/vector'
-import Bullet from './bullet'
 
 const vertices = [
-  0, 0,
-  15, 35,
-  5, 33,
-  5, 50,
-  -5, 50,
-  -5, 33,
-  -15, 35,
-  0, 0,
+  50, 0,
+  15, 15,
+  17, 5,
+  0, 5,
+  0, -5,
+  17, -5,
+  15, -15,
+  50, 0,
 ]
 
 class Ship extends Graphics {
-  constructor(x, y, stage) {
+  constructor(x, y, spawnBullet) {
     super()
 
     this.getKeys = bindKeys()
 
-    this.stage = stage
+    this.spawnBullet = spawnBullet
     this.x = x
     this.y = y
     this.velocity = new Vector()
@@ -30,12 +29,15 @@ class Ship extends Graphics {
     this.maxSpeed = 4
     this.turningSpeed = 0.075
     this.breakingSpeed = 0.1
+    this.bulletTimer = 0
 
-    this.rotation = -0.4
+    this.rotation = Math.PI * 1.3
 
+    this.beginFill(COLOUR_BLACK)
     this.lineStyle(2, COLOUR_ORANGE, 1)
     this.drawPolygon(vertices)
-    this.pivot = new Point(0, 25)
+    this.endFill()
+    this.pivot = new Point(25, 0)
   }
 
   updateMovement(delta, keys) {
@@ -45,8 +47,8 @@ class Ship extends Graphics {
       this.rotation += this.turningSpeed * delta
     }
 
-    const rotatedAccel = new Vector(0, -this.acceleration)
-    rotatedAccel.setDirection(this.rotation - (Math.PI / 2))
+    const rotatedAccel = new Vector(-this.acceleration)
+    rotatedAccel.setDirection(this.rotation)
 
     if (keys.up) {
       this.velocity.add(rotatedAccel)
@@ -63,9 +65,13 @@ class Ship extends Graphics {
   }
 
   updateAttack(delta, keys) {
-    if (keys.fire) {
-      const bullet = new Bullet(this.x, this.y)
-      this.stage.addChild(bullet)
+    if (keys.fire && !this.isFiring) {
+      this.spawnBullet(this.x, this.y, this.rotation)
+      this.isFiring = true
+    }
+
+    if (!keys.fire) {
+      this.isFiring = false
     }
   }
 
