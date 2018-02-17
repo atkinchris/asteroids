@@ -35,7 +35,7 @@ class Asteroid extends Graphics {
   collides({ x, y }) {
     const dX = (x - this.x) ** 2
     const dY = (y - this.y) ** 2
-    return Math.sqrt(dX + dY) < this.radius
+    return Math.sqrt(dX + dY) <= this.radius * 1.1
   }
 
   update(delta) {
