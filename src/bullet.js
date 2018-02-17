@@ -4,11 +4,11 @@ import Vector from './utils/vector'
 import { COLOUR_WHITE } from './constants'
 
 class Bullet extends Graphics {
-  constructor() {
+  constructor(width) {
     super()
 
     this.maxSpeed = 10
-    this.maxLife = 1000
+    this.maxLife = width / this.maxSpeed
     this.beginFill(COLOUR_WHITE)
     this.drawEllipse(0, 0, 3, 3)
     this.endFill()
@@ -18,6 +18,7 @@ class Bullet extends Graphics {
 
   respawn(x, y, direction) {
     this.alive = true
+    this.visible = true
 
     this.life = this.maxLife
     this.x = x
@@ -39,10 +40,9 @@ class Bullet extends Graphics {
     }
 
     if (this.life <= 0) {
-      this.alive = false
+      this.kill()
     }
 
-    this.visible = true
     this.x += this.velocity.x * delta
     this.y += this.velocity.y * delta
   }
