@@ -4,7 +4,7 @@ import { COLOUR_ORANGE, COLOUR_BLACK } from './constants'
 import bindKeys from './utils/input'
 import Vector from './utils/vector'
 
-const vertices = [
+export const vertices = [
   0, 0,
   -33, 15,
   -30, 5,

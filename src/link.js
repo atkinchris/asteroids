@@ -3,11 +3,11 @@ import { Text } from 'pixi.js'
 import { COLOUR_ORANGE } from './constants'
 
 class Link extends Text {
-  constructor(x, y) {
+  constructor(x, y, fill = COLOUR_ORANGE) {
     super('sainsburys.work/dandt', {
       fontFamily: 'MaryAnn-Regular',
       fontSize: 24,
-      fill: COLOUR_ORANGE,
+      fill,
       align: 'right',
     })
 

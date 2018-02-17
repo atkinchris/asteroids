@@ -3,6 +3,7 @@ import { Application } from 'pixi.js'
 import Bullet from './bullet'
 import Ship from './ship'
 import Link from './link'
+import Splash from './splash'
 import AsteroidManager from './asteroidManager'
 import { arrayOf } from './utils/array'
 
@@ -21,11 +22,13 @@ const spawnBullet = (x, y, direction) => {
 const ship = new Ship(width / 2, height / 2, spawnBullet)
 const link = new Link(width, height)
 const asteroids = new AsteroidManager(width, height)
+const splash = new Splash(width, height)
 
 bullets.forEach(bullet => app.stage.addChild(bullet))
 app.stage.addChild(asteroids)
 app.stage.addChild(ship)
 app.stage.addChild(link)
+app.stage.addChild(splash)
 
 const clamp = ({ position }) => {
   if (position.x > width) position.x = 0
