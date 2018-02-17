@@ -1,6 +1,7 @@
-import { Graphics, Point } from 'pixi.js'
+import { Graphics } from 'pixi.js'
 
 import Vector from './utils/vector'
+import { rPolygonFlat } from './utils/polygon'
 import { COLOUR_WHITE } from './constants'
 import { between } from './utils/random'
 
@@ -9,15 +10,13 @@ class Asteroid extends Graphics {
     super()
 
     this.alive = false
-    this.maxSpeed = 2
-    this.lineStyle(2, COLOUR_WHITE, 1)
-    this.drawEllipse(0, 0, 12, 12)
-
-    this.pivot = new Point(6, 6)
+    this.maxSpeed = 1
   }
 
   respawn(width, height) {
     this.alive = true
+
+    this.redraw()
 
     this.x = between(0, width)
     this.y = between(0, height)
@@ -25,6 +24,15 @@ class Asteroid extends Graphics {
 
     this.velocity = new Vector(0, -this.maxSpeed)
     this.velocity.setDirection(this.rotation)
+  }
+
+  redraw() {
+    const sides = between(6, 9)
+    const polygon = rPolygonFlat(0, 0, 24, sides)
+
+    this.clear()
+    this.lineStyle(2, COLOUR_WHITE, 1)
+    this.drawPolygon(polygon)
   }
 
   update(delta) {

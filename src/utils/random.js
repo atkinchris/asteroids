@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-const between = (min, max) => Math.floor(Math.random() * max) + min
+const between = (min, max) => Math.floor(Math.random() * (max - min)) + min
 
 export {
   between,
