@@ -1,18 +1,18 @@
-import { Graphics, Point } from 'pixi.js'
+import { Graphics } from 'pixi.js'
 
 import { COLOUR_ORANGE, COLOUR_BLACK } from './constants'
 import bindKeys from './utils/input'
 import Vector from './utils/vector'
 
 const vertices = [
-  50, 0,
-  15, 15,
-  17, 5,
-  0, 5,
-  0, -5,
-  17, -5,
-  15, -15,
-  50, 0,
+  0, 0,
+  -33, 15,
+  -30, 5,
+  -50, 5,
+  -50, -5,
+  -30, -5,
+  -33, -15,
+  0, 0,
 ]
 
 class Ship extends Graphics {
@@ -26,7 +26,7 @@ class Ship extends Graphics {
     this.y = y
     this.velocity = new Vector()
     this.acceleration = 0.5
-    this.maxSpeed = 4
+    this.maxSpeed = 5
     this.turningSpeed = 0.075
     this.breakingSpeed = 0.1
     this.bulletTimer = 0
@@ -37,7 +37,6 @@ class Ship extends Graphics {
     this.lineStyle(2, COLOUR_ORANGE, 1)
     this.drawPolygon(vertices)
     this.endFill()
-    this.pivot = new Point(25, 0)
   }
 
   updateMovement(delta, keys) {

@@ -7,7 +7,8 @@ class Bullet extends Graphics {
   constructor() {
     super()
 
-    this.speed = 7
+    this.maxSpeed = 10
+    this.maxLife = 1000
     this.alive = false
     this.beginFill(COLOUR_WHITE)
     this.drawEllipse(0, 0, 3, 3)
@@ -17,10 +18,10 @@ class Bullet extends Graphics {
   respawn(x, y, direction) {
     this.alive = true
 
-    this.life = 1000
+    this.life = this.maxLife
     this.x = x
     this.y = y
-    this.velocity = new Vector(0, -this.speed)
+    this.velocity = new Vector(0, -this.maxSpeed)
     this.velocity.setDirection(direction)
   }
 
