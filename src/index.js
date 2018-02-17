@@ -6,13 +6,14 @@ import Link from './link'
 import Asteroid from './asteroid'
 import { arrayOf } from './utils/array'
 
+const maxAsteroids = 5
 const width = window.innerWidth
 const height = window.innerHeight
 const app = new Application(width, height, { antialias: true })
 document.body.appendChild(app.view)
 
 const bullets = arrayOf(10, Bullet)
-const asteroids = arrayOf(5, Asteroid)
+const asteroids = []
 
 const spawnBullet = (x, y, direction) => {
   const bullet = bullets.shift()
@@ -24,10 +25,6 @@ const ship = new Ship(width / 2, height / 2, spawnBullet)
 const link = new Link(width, height)
 
 bullets.forEach(bullet => app.stage.addChild(bullet))
-asteroids.forEach((asteroid) => {
-  app.stage.addChild(asteroid)
-  asteroid.respawn(width, height)
-})
 app.stage.addChild(ship)
 app.stage.addChild(link)
 
@@ -51,13 +48,30 @@ app.ticker.add((delta) => {
   ship.update(delta)
   clamp(ship)
 
-  asteroids.forEach((asteroid) => {
+  bullets.filter(b => b.alive).forEach((bullet) => {
+    bullet.update(delta)
+    confine(bullet)
+
+    asteroids.forEach((asteroid) => {
+      if (asteroid.collides(bullet)) {
+        asteroid.kill()
+        bullet.kill()
+      }
+    })
+  })
+
+  asteroids.forEach((asteroid, index) => {
+    if (!asteroid.alive) {
+      asteroids.splice(index, 1)
+    }
+
     asteroid.update(delta)
     clamp(asteroid)
   })
 
-  bullets.forEach((bullet) => {
-    bullet.update(delta)
-    confine(bullet)
-  })
+  if (asteroids.length < maxAsteroids) {
+    const asteroid = new Asteroid(width, height)
+    app.stage.addChild(asteroid)
+    asteroids.push(asteroid)
+  }
 })

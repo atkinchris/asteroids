@@ -9,10 +9,11 @@ class Bullet extends Graphics {
 
     this.maxSpeed = 10
     this.maxLife = 1000
-    this.alive = false
     this.beginFill(COLOUR_WHITE)
     this.drawEllipse(0, 0, 3, 3)
     this.endFill()
+
+    this.kill()
   }
 
   respawn(x, y, direction) {
@@ -27,13 +28,11 @@ class Bullet extends Graphics {
 
   kill() {
     this.alive = false
+    this.visible = false
   }
 
   update(delta) {
-    if (!this.alive) {
-      this.visible = false
-      return
-    }
+    if (!this.alive) return
 
     if (this.life > 0) {
       this.life -= delta
