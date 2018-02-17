@@ -4,7 +4,7 @@ const bindKeys = () => {
     up: false,
     left: false,
     right: false,
-    // fire: false,
+    fire: false,
   }
 
   const handleKey = (event, pressed) => {
@@ -26,6 +26,9 @@ const bindKeys = () => {
       case 'ArrowRight':
       case 'd':
         controls.right = pressed
+        break
+      case ' ':
+        controls.fire = pressed
         break
       default:
         break

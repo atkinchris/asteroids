@@ -9,7 +9,7 @@ const height = window.innerHeight
 const app = new Application(width, height, { antialias: true })
 document.body.appendChild(app.view)
 
-const ship = new Ship(width / 2, height / 2)
+const ship = new Ship(width / 2, height / 2, app.stage)
 const link = new Link(width, height)
 
 app.stage.addChild(ship)
