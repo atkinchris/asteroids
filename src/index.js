@@ -23,6 +23,7 @@ const ship = new Ship(width / 2, height / 2, spawnBullet)
 const link = new Link(width, height)
 const asteroids = new AsteroidManager(width, height)
 const splash = new Splash(width, height)
+splash.visible = false
 
 bullets.forEach(bullet => app.stage.addChild(bullet))
 app.stage.addChild(asteroids)
