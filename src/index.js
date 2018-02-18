@@ -18,8 +18,16 @@ const spawnBullet = (x, y, direction) => {
   bullets.push(bullet)
 }
 
+const ship = new Ship(width / 2, height / 2, spawnBullet)
+const asteroids = new AsteroidManager(width, height)
+
+bullets.forEach(bullet => app.stage.addChild(bullet))
+app.stage.addChild(asteroids)
+app.stage.addChild(ship)
+
 const start = () => {
   setHasOverlay(false)
+  ship.respawn()
   app.start()
 }
 
@@ -28,13 +36,8 @@ const stop = () => {
   setHasOverlay(true)
 }
 
+ship.onKill = stop
 registerControls({ start, stop })
-const ship = new Ship(width / 2, height / 2, spawnBullet, stop)
-const asteroids = new AsteroidManager(width, height)
-
-bullets.forEach(bullet => app.stage.addChild(bullet))
-app.stage.addChild(asteroids)
-app.stage.addChild(ship)
 
 const clamp = ({ position }) => {
   if (position.x > width) position.x = 0

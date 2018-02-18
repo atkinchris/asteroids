@@ -18,19 +18,20 @@ class Ship extends Graphics {
   constructor(x, y, spawnBullet, onKill) {
     super()
 
+    this.initX = x
+    this.initY = y
+    this.x = this.initX
+    this.y = this.initY
+
     this.getKeys = bindKeys()
     this.onKill = onKill
 
     this.spawnBullet = spawnBullet
-    this.x = x
-    this.y = y
     this.velocity = new Vector()
     this.acceleration = 0.5
     this.maxSpeed = 5
     this.turningSpeed = 0.075
     this.breakingSpeed = 0.1
-    this.bulletTimer = 0
-    this.alive = true
 
     this.rotation = Math.PI * 1.3
 
@@ -46,8 +47,15 @@ class Ship extends Graphics {
 
   kill() {
     this.alive = false
-    this.velocity = new Vector(0, 0)
+    this.velocity = new Vector()
     this.onKill(this)
+  }
+
+  respawn() {
+    this.x = this.initX
+    this.y = this.initY
+    this.bulletTimer = 0
+    this.alive = true
   }
 
   updateMovement(delta, keys) {
