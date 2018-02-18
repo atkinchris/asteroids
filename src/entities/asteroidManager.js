@@ -23,11 +23,11 @@ class AsteroidManager extends Container {
     if (position.y < 0) position.y = height
   }
 
-  collides(bullet) {
+  collides(entity) {
     this.asteroids.forEach((asteroid) => {
-      if (asteroid.collides(bullet)) {
+      if (asteroid.collides(entity)) {
         asteroid.kill()
-        bullet.kill()
+        entity.kill()
       }
     })
   }
