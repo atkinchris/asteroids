@@ -34,12 +34,46 @@ body,
   width: auto;
 }
 
+.cursor {
+  height: 9rem;
+}
+
+.cursor svg {
+  fill: #FFFFFF;
+  height: 100%;
+  width: auto;
+}
+
 .has-overlay .work-link {
   color: #FFFFFF;
+  transition: color 1s ease;
 }
 
 .has-overlay .logo-link {
   fill: #FFFFFF;
+  transition: fill 1s ease;
+}
+
+.splash-circle {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -100vh;
+  margin-top: -100vh;
+
+  transform: scale(0);
+
+  width: 200vh;
+  height: 200vh;
+  border-radius: 100%;
+  background-color: #F06C00;
+}
+
+.has-overlay .splash-circle {
+  display: block;
+  animation: grow 1.5s forwards;
+  animation-delay: 0.5s;
 }
 
 .splash-screen {
@@ -60,18 +94,21 @@ body,
 }
 
 .has-overlay .splash-screen {
+  opacity: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  animation: fadein 1s forwards;
+  animation-delay: 1.2s;
 }
 
-.cursor {
-  height: 9rem;
+@keyframes grow {
+  from { transform: scale(0); }
+  to { transform: scale(1) }
 }
 
-.cursor svg {
-  fill: #FFFFFF;
-  height: 100%;
-  width: auto;
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
