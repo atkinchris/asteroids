@@ -10,6 +10,33 @@ body,
   background-color: #000000;
 }
 
+.canvas {
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.has-overlay .canvas {
+  opacity: 0;
+}
+
+.play-button {
+  opacity: 0;
+  font-size: 1.25rem;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  padding: 0.5rem 1rem;
+  background: none;
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+}
+
+.has-overlay .play-button {
+  transition: opacity 1s ease;
+  transition-delay: 1.5s;
+  opacity: 1;
+}
+
 .work-link {
   position: absolute;
   font-size: 1.5rem;

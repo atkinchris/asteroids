@@ -2,6 +2,7 @@ import { Application } from 'pixi.js'
 
 import { Bullet, Ship, AsteroidManager } from './entities'
 import { arrayOf } from './utils'
+import registerControls from './controls'
 
 import './main.css'
 
@@ -31,6 +32,10 @@ const clamp = ({ position }) => {
   if (position.y < 0) position.y = height
 }
 
+registerControls({
+  start: () => app.start(),
+})
+
 app.ticker.add((delta) => {
   ship.update(delta)
   clamp(ship)
@@ -43,3 +48,5 @@ app.ticker.add((delta) => {
 
   asteroids.update(delta)
 })
+
+app.stop()
