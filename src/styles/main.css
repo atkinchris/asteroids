@@ -8,6 +8,7 @@ body,
   overflow: hidden;
   font-family: 'MaryAnn';
   font-weight: 400;
+  font-size: 1vw;
   background-color: #000000;
 }
 
@@ -79,7 +80,8 @@ body,
 }
 
 .cursor {
-  height: 9rem;
+  height: 6rem;
+  margin-left: 3rem;
 }
 
 .cursor svg {
