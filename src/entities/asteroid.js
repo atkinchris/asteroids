@@ -30,17 +30,16 @@ class Asteroid extends Graphics {
     this.visible = false
   }
 
+  distanceFrom({ x, y }) {
+    const dX = (x - this.x) ** 2
+    const dY = (y - this.y) ** 2
+    return Math.sqrt(dX + dY)
+  }
+
   collides(entity) {
-    const type = entity.collideAs()
+    const distance = this.distanceFrom(entity)
 
-    if (type === 'circle') {
-      const { x, y } = entity
-      const dX = (x - this.x) ** 2
-      const dY = (y - this.y) ** 2
-      return Math.sqrt(dX + dY) <= this.radius * 1.1
-    }
-
-    return false
+    return distance < this.radius + entity.radius
   }
 
   update(delta) {

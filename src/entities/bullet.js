@@ -7,18 +7,15 @@ class Bullet extends Graphics {
   constructor(width) {
     super()
 
-    this.collisionType = 'circle'
     this.maxSpeed = 10
     this.maxLife = width / this.maxSpeed
+    this.radius = 2
+
     this.beginFill(COLOUR_WHITE)
-    this.drawEllipse(0, 0, 3, 3)
+    this.drawEllipse(0, 0, this.radius, 3)
     this.endFill()
 
     this.kill()
-  }
-
-  collideAs() {
-    return this.collisionType
   }
 
   respawn(x, y, direction) {

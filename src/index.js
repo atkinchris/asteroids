@@ -1,7 +1,7 @@
 import { Application } from 'pixi.js'
 
 import { Bullet, Ship, AsteroidManager } from './entities'
-import { arrayOf } from './utils'
+import { arrayOf, setHasOverlay } from './utils'
 import registerControls from './controls'
 
 import './styles'
@@ -18,7 +18,18 @@ const spawnBullet = (x, y, direction) => {
   bullets.push(bullet)
 }
 
-const ship = new Ship(width / 2, height / 2, spawnBullet)
+const start = () => {
+  setHasOverlay(false)
+  app.start()
+}
+
+const stop = () => {
+  app.stop()
+  setHasOverlay(true)
+}
+
+registerControls({ start, stop })
+const ship = new Ship(width / 2, height / 2, spawnBullet, stop)
 const asteroids = new AsteroidManager(width, height)
 
 bullets.forEach(bullet => app.stage.addChild(bullet))
@@ -32,11 +43,6 @@ const clamp = ({ position }) => {
   if (position.y < 0) position.y = height
 }
 
-registerControls({
-  start: () => app.start(),
-  stop: () => app.stop(),
-})
-
 app.ticker.add((delta) => {
   ship.update(delta)
   clamp(ship)
@@ -48,6 +54,7 @@ app.ticker.add((delta) => {
   })
 
   asteroids.update(delta)
+  asteroids.collides(ship)
 })
 
-app.stop()
+stop()

@@ -15,10 +15,11 @@ export const vertices = [
 ]
 
 class Ship extends Graphics {
-  constructor(x, y, spawnBullet) {
+  constructor(x, y, spawnBullet, onKill) {
     super()
 
     this.getKeys = bindKeys()
+    this.onKill = onKill
 
     this.spawnBullet = spawnBullet
     this.x = x
@@ -29,6 +30,7 @@ class Ship extends Graphics {
     this.turningSpeed = 0.075
     this.breakingSpeed = 0.1
     this.bulletTimer = 0
+    this.alive = true
 
     this.rotation = Math.PI * 1.3
 
@@ -36,9 +38,21 @@ class Ship extends Graphics {
     this.lineStyle(2, COLOUR_ORANGE, 1)
     this.drawPolygon(vertices)
     this.endFill()
+
+    this.radius = 23
+
+    this.pivot = { x: -25, y: 0 }
+  }
+
+  kill() {
+    this.alive = false
+    this.velocity = new Vector(0, 0)
+    this.onKill(this)
   }
 
   updateMovement(delta, keys) {
+    if (!this.alive) return
+
     if (keys.left) {
       this.rotation -= this.turningSpeed * delta
     } else if (keys.right) {
@@ -64,7 +78,11 @@ class Ship extends Graphics {
 
   updateAttack(delta, keys) {
     if (keys.fire && !this.isFiring) {
-      this.spawnBullet(this.x, this.y, this.rotation)
+      const spawn = {
+        x: this.x + (Math.cos(this.rotation) * -this.pivot.x),
+        y: this.y + (Math.sin(this.rotation) * -this.pivot.x),
+      }
+      this.spawnBullet(spawn.x, spawn.y, this.rotation)
       this.isFiring = true
     }
 
