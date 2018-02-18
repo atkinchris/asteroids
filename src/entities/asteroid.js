@@ -1,9 +1,7 @@
 import { Graphics } from 'pixi.js'
 
-import Vector from './utils/vector'
-import { rPolygonFlat } from './utils/polygon'
-import { COLOUR_WHITE } from './constants'
-import { between } from './utils/random'
+import { Vector, rPolygonFlat, between } from '../utils'
+import { COLOUR_WHITE } from '../constants'
 
 class Asteroid extends Graphics {
   constructor(width, height) {

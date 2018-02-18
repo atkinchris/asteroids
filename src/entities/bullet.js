@@ -1,7 +1,7 @@
 import { Graphics } from 'pixi.js'
 
-import Vector from './utils/vector'
-import { COLOUR_WHITE } from './constants'
+import { Vector } from '../utils'
+import { COLOUR_WHITE } from '../constants'
 
 class Bullet extends Graphics {
   constructor(width) {

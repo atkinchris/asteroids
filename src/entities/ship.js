@@ -1,8 +1,7 @@
 import { Graphics } from 'pixi.js'
 
-import { COLOUR_ORANGE, COLOUR_BLACK } from './constants'
-import bindKeys from './utils/input'
-import Vector from './utils/vector'
+import { bindKeys, Vector } from '../utils'
+import { COLOUR_ORANGE, COLOUR_BLACK } from '../constants'
 
 export const vertices = [
   0, 0,
