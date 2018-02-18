@@ -1,0 +1,77 @@
+html,
+body,
+.container {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'MaryAnn-Regular';
+  background-color: #000000;
+}
+
+.work-link {
+  position: absolute;
+  font-size: 1.5rem;
+  right: 2rem;
+  bottom: 2rem;
+  color: #F06C00;
+  text-decoration: none;
+}
+
+.logo-link {
+  position: absolute;
+  left: 2rem;
+  bottom: 2rem;
+  height: 1.5rem;
+  margin: 0;
+  text-align: left;
+  fill: #F06C00;
+}
+
+.logo-link svg {
+  height: 100%;
+  width: auto;
+}
+
+.has-overlay .work-link {
+  color: #FFFFFF;
+}
+
+.has-overlay .logo-link {
+  fill: #FFFFFF;
+}
+
+.splash-screen {
+  display: none;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  font-family: 'MaryAnn-Bold';
+  font-size: 5rem;
+  line-height: 5.5rem;
+  text-align: right;
+  color: #FFFFFF;
+  background-color: #F06C00;
+}
+
+.has-overlay .splash-screen {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor {
+  height: 9rem;
+}
+
+.cursor svg {
+  fill: #FFFFFF;
+  height: 100%;
+  width: auto;
+}
