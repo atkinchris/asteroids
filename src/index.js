@@ -34,6 +34,7 @@ const clamp = ({ position }) => {
 
 registerControls({
   start: () => app.start(),
+  stop: () => app.stop(),
 })
 
 app.ticker.add((delta) => {

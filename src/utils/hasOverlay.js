@@ -1,5 +1,5 @@
 const setHasOverlay = (visible) => {
-  const { classList } = document.querySelector('.container')
+  const { classList } = document.getElementById('container')
   const className = 'has-overlay'
 
   if (visible) {
