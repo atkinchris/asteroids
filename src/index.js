@@ -4,7 +4,7 @@ import { Bullet, Ship, AsteroidManager } from './entities'
 import { arrayOf } from './utils'
 import registerControls from './controls'
 
-import './main.css'
+import './styles'
 
 const width = window.innerWidth
 const height = window.innerHeight

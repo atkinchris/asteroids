@@ -27,6 +27,15 @@ const common = {
       exclude: /node_modules/,
       use: 'babel-loader',
     }, {
+      test: /\.woff$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 5000,
+          name: 'fonts/[name].[ext]',
+        },
+      },
+    }, {
       test: /\.css$/,
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',

@@ -1,0 +1,13 @@
+@font-face {
+  font-family: MaryAnn;
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/mary_ann-regular.woff');
+}
+
+@font-face {
+  font-family: MaryAnn;
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/mary_ann-bold.woff');
+}
