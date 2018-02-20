@@ -20,12 +20,16 @@ app.stage.addChild(asteroids)
 app.stage.addChild(ship)
 
 const start = () => {
+  if (app.isRunning) return
+  app.isRunning = true
   setHasOverlay(false)
   ship.respawn()
   app.start()
 }
 
 const stop = () => {
+  if (!app.isRunning) return
+  app.isRunning = false
   app.stop()
   setHasOverlay(true)
 }
