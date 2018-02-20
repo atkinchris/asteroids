@@ -13,6 +13,8 @@ class AsteroidManager extends Container {
 
     this.timer = 0
     this.spawnTime = 300
+
+    this.sizes = [32, 24, 16]
   }
 
   clamp({ position }) {
@@ -38,13 +40,25 @@ class AsteroidManager extends Container {
     const rotation = between(0, Math.PI)
     const x = this.rotation < Math.PI / 2 ? 0 : width
     const y = between(0, height)
-    const radius = 24
+    const radius = this.sizes[0]
 
     this.spawn(x, y, rotation, radius)
   }
 
-  spawn(x, y, rotation, radius) {
-    const asteroid = new Asteroid(x, y, rotation, radius)
+  spawnChild(parent) {
+    const { x, y, rotation, generation } = parent
+
+    const nextGeneration = generation + 1
+
+    if (!this.sizes[nextGeneration]) return
+
+    this.spawn(x, y, rotation + 90, this.sizes[nextGeneration], nextGeneration)
+    this.spawn(x, y, rotation - 90, this.sizes[nextGeneration], nextGeneration)
+  }
+
+  spawn(x, y, rotation, radius, generation) {
+    const asteroid = new Asteroid(x, y, rotation, radius, generation)
+    asteroid.onKill = this.spawnChild.bind(this)
     this.addChild(asteroid)
     this.asteroids.push(asteroid)
   }

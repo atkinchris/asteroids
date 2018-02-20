@@ -4,7 +4,7 @@ import { Vector, rPolygonFlat, between } from '../utils'
 import { COLOUR_WHITE } from '../constants'
 
 class Asteroid extends Graphics {
-  constructor(x, y, rotation, radius) {
+  constructor(x, y, rotation, radius, generation) {
     super()
 
     this.maxSpeed = 1
@@ -14,6 +14,7 @@ class Asteroid extends Graphics {
     this.y = y
     this.rotation = rotation
     this.radius = radius
+    this.generation = generation || 0
 
     this.velocity = new Vector(0, -this.maxSpeed)
     this.velocity.setDirection(this.rotation)
@@ -26,6 +27,7 @@ class Asteroid extends Graphics {
   }
 
   kill() {
+    this.onKill(this)
     this.alive = false
     this.visible = false
   }
