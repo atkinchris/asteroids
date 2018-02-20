@@ -21,6 +21,28 @@ body,
   opacity: 0;
 }
 
+.score {
+  font-size: 2rem;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.has-overlay .score {
+  position: absolute;
+  top: initial;
+  bottom: 2rem;
+  left: 50%;
+
+  transform: translateX(-50%);
+}
+
+.has-overlay .score::before {
+  content: "Last Score "
+}
+
 .button {
   font-size: 1.25rem;
   padding: 0.5rem 1rem;

@@ -42,11 +42,11 @@ class AsteroidManager extends Container {
     const y = between(0, height)
     const radius = this.sizes[0]
 
-    this.spawn(x, y, rotation, radius)
+    this.spawn(x, y, rotation, radius, 0)
   }
 
-  spawnChild(parent) {
-    const { x, y, rotation, generation } = parent
+  spawnChild(parent, generation) {
+    const { x, y, rotation } = parent
 
     const nextGeneration = generation + 1
 
@@ -57,8 +57,11 @@ class AsteroidManager extends Container {
   }
 
   spawn(x, y, rotation, radius, generation) {
-    const asteroid = new Asteroid(x, y, rotation, radius, generation)
-    asteroid.onKill = this.spawnChild.bind(this)
+    const asteroid = new Asteroid(x, y, rotation, radius)
+    asteroid.onKill = () => {
+      this.spawnChild(asteroid, generation)
+      this.onKill()
+    }
     this.addChild(asteroid)
     this.asteroids.push(asteroid)
   }

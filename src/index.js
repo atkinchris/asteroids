@@ -1,6 +1,6 @@
 import { Application } from 'pixi.js'
 
-import { Ship, AsteroidManager, BulletManager } from './entities'
+import { ScoreManager, Ship, AsteroidManager, BulletManager } from './entities'
 import { setHasOverlay, clamp } from './utils'
 import registerControls from './controls'
 
@@ -8,6 +8,7 @@ import './styles'
 
 const width = window.innerWidth
 const height = window.innerHeight
+const score = new ScoreManager()
 const app = new Application(width, height, { antialias: true })
 document.querySelector('.canvas').appendChild(app.view)
 
@@ -22,7 +23,9 @@ app.stage.addChild(ship)
 const start = () => {
   if (app.isRunning) return
   app.isRunning = true
+
   setHasOverlay(false)
+  score.reset()
   ship.respawn()
   app.start()
 }
@@ -37,6 +40,7 @@ const stop = () => {
 bullets.asteroids = asteroids
 ship.bulletManager = bullets
 ship.onKill = stop
+asteroids.onKill = () => score.add(10)
 registerControls({ start, stop })
 
 app.ticker.add((delta) => {
@@ -46,6 +50,8 @@ app.ticker.add((delta) => {
   bullets.update(delta)
   asteroids.update(delta)
   asteroids.collides(ship)
+
+  score.update()
 })
 
 stop()
