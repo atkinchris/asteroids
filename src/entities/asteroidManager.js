@@ -8,11 +8,11 @@ class AsteroidManager extends Container {
     super()
 
     this.bounds = { width, height }
-    this.maxAsteroids = 5
+    this.maxAsteroids = 20
     this.asteroids = []
 
     this.timer = 0
-    this.spawnTime = 300
+    this.spawnTime = 200
 
     this.sizes = [32, 24, 16]
   }
