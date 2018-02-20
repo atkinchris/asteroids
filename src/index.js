@@ -25,6 +25,8 @@ const start = () => {
   app.isRunning = true
 
   setHasOverlay(false)
+  asteroids.reset()
+  bullets.reset()
   score.reset()
   ship.respawn()
   app.start()

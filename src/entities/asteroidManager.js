@@ -66,12 +66,19 @@ class AsteroidManager extends Container {
     this.asteroids.push(asteroid)
   }
 
+  reset() {
+    this.asteroids.forEach(asteroid => asteroid.destroy())
+    this.asteroids = []
+  }
+
   update(delta) {
     const { asteroids } = this
 
     asteroids.forEach((asteroid, index) => {
       if (!asteroid.alive) {
+        asteroid.destroy()
         asteroids.splice(index, 1)
+        return
       }
 
       asteroid.update(delta)

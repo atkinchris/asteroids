@@ -15,6 +15,10 @@ class BulletManager extends Container {
     this.bullets.forEach(bullet => this.addChild(bullet))
   }
 
+  reset() {
+    this.bullets.forEach(bullet => bullet.kill())
+  }
+
   spawnBullet(x, y, direction) {
     const bullet = this.bullets.shift()
     bullet.respawn(x, y, direction)
