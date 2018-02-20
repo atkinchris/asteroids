@@ -15,7 +15,7 @@ export const vertices = [
 ]
 
 class Ship extends Graphics {
-  constructor(x, y, spawnBullet, onKill) {
+  constructor(x, y, bulletManager, onKill) {
     super()
 
     this.initX = x
@@ -26,7 +26,7 @@ class Ship extends Graphics {
     this.getKeys = bindKeys()
     this.onKill = onKill
 
-    this.spawnBullet = spawnBullet
+    this.bulletManager = bulletManager
     this.velocity = new Vector()
     this.acceleration = 0.5
     this.maxSpeed = 5
@@ -90,7 +90,7 @@ class Ship extends Graphics {
         x: this.x + (Math.cos(this.rotation) * -this.pivot.x),
         y: this.y + (Math.sin(this.rotation) * -this.pivot.x),
       }
-      this.spawnBullet(spawn.x, spawn.y, this.rotation)
+      this.bulletManager.spawnBullet(spawn.x, spawn.y, this.rotation)
       this.isFiring = true
     }
 
