@@ -1,6 +1,6 @@
 import { Container } from 'pixi.js'
 
-import { between } from '../utils'
+import { between, clamp } from '../utils'
 import Asteroid from './asteroid'
 
 class AsteroidManager extends Container {
@@ -13,17 +13,9 @@ class AsteroidManager extends Container {
 
     this.timer = 0
     this.spawnTime = 200
+    this.clamp = clamp(this.bounds)
 
     this.sizes = [32, 24, 16]
-  }
-
-  clamp({ position }) {
-    const { width, height } = this.bounds
-
-    if (position.x > width) position.x = 0
-    if (position.x < 0) position.x = width
-    if (position.y > height) position.y = 0
-    if (position.y < 0) position.y = height
   }
 
   collides(entity) {
