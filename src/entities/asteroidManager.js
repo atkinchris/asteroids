@@ -1,5 +1,6 @@
 import { Container } from 'pixi.js'
 
+import { between } from '../utils'
 import Asteroid from './asteroid'
 
 class AsteroidManager extends Container {
@@ -32,6 +33,22 @@ class AsteroidManager extends Container {
     })
   }
 
+  spawnNew() {
+    const { width, height } = this.bounds
+    const rotation = between(0, Math.PI)
+    const x = this.rotation < Math.PI / 2 ? 0 : width
+    const y = between(0, height)
+    const radius = 24
+
+    this.spawn(x, y, rotation, radius)
+  }
+
+  spawn(x, y, rotation, radius) {
+    const asteroid = new Asteroid(x, y, rotation, radius)
+    this.addChild(asteroid)
+    this.asteroids.push(asteroid)
+  }
+
   update(delta) {
     const { asteroids } = this
 
@@ -50,10 +67,7 @@ class AsteroidManager extends Container {
 
     if (this.timer <= 0 && asteroids.length < this.maxAsteroids) {
       this.timer = this.spawnTime
-      const { width, height } = this.bounds
-      const asteroid = new Asteroid(width, height)
-      this.addChild(asteroid)
-      asteroids.push(asteroid)
+      this.spawnNew()
     } else {
       this.timer -= delta
     }

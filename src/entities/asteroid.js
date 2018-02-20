@@ -4,16 +4,16 @@ import { Vector, rPolygonFlat, between } from '../utils'
 import { COLOUR_WHITE } from '../constants'
 
 class Asteroid extends Graphics {
-  constructor(width, height) {
+  constructor(x, y, rotation, radius) {
     super()
 
-    this.radius = 24
     this.maxSpeed = 1
     this.alive = true
 
-    this.rotation = between(0, Math.PI)
-    this.x = this.rotation < Math.PI / 2 ? 0 : width
-    this.y = between(0, height)
+    this.x = x
+    this.y = y
+    this.rotation = rotation
+    this.radius = radius
 
     this.velocity = new Vector(0, -this.maxSpeed)
     this.velocity.setDirection(this.rotation)
