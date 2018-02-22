@@ -1,6 +1,6 @@
 import { Graphics } from 'pixi.js'
 
-import { Vector, rPolygonFlat, between } from '../utils'
+import { Vector, dPolygonFlat, between, rPolygonFlat } from '../utils'
 import { COLOUR_WHITE } from '../constants'
 
 class Asteroid extends Graphics {
@@ -19,10 +19,13 @@ class Asteroid extends Graphics {
     this.velocity.setDirection(this.rotation)
 
     const sides = between(6, 9)
-    const polygon = rPolygonFlat(0, 0, this.radius, sides)
+    const type = Math.random() > 0.75 ? dPolygonFlat : rPolygonFlat
+    const polygon = type(0, 0, this.radius, sides)
 
     this.lineStyle(2, COLOUR_WHITE, 1)
+    this.beginFill('black')
     this.drawPolygon(polygon)
+    this.endFill()
   }
 
   kill() {
