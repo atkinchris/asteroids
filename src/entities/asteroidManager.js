@@ -4,18 +4,22 @@ import { between, clamp } from '../utils'
 import Asteroid from './asteroid'
 
 class AsteroidManager extends Container {
-  constructor(width, height) {
+  constructor(width, height, viewport) {
     super()
 
+    this.parent = viewport
     this.bounds = { width, height }
-    this.maxAsteroids = 20
+    this.maxAsteroids = 500
+    this.initialAsteroids = 20
     this.asteroids = []
 
-    this.timer = 0
-    this.spawnTime = 200
+    this.timer = 200
+    this.spawnTime = 10
     this.clamp = clamp(this.bounds)
 
     this.sizes = [32, 24, 16]
+
+    this.reset()
   }
 
   collides(entity) {
@@ -30,8 +34,12 @@ class AsteroidManager extends Container {
   spawnNew() {
     const { width, height } = this.bounds
     const rotation = between(0, Math.PI)
-    const x = this.rotation < Math.PI / 2 ? 0 : width
-    const y = between(0, height)
+    const x = Math.random() > 0.5
+      ? between(0, this.parent.left)
+      : between(this.parent.right, width)
+    const y = Math.random() > 0.5
+      ? between(0, this.parent.top)
+      : between(this.parent.bottom, height)
     const radius = this.sizes[0]
 
     this.spawn(x, y, rotation, radius, 0)
@@ -61,6 +69,10 @@ class AsteroidManager extends Container {
   reset() {
     this.asteroids.forEach(asteroid => asteroid.destroy())
     this.asteroids = []
+
+    for (let i = 0; i < this.initialAsteroids; i += 1) {
+      this.spawnNew()
+    }
   }
 
   update(delta) {

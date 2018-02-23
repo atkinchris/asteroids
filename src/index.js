@@ -1,24 +1,38 @@
 import { Application } from 'pixi.js'
+import Viewport from 'pixi-viewport'
 
-import { ScoreManager, Ship, AsteroidManager, BulletManager } from './entities'
+import { ScoreManager, Ship, AsteroidManager, BulletManager, StarField } from './entities'
 import { setHasOverlay, clamp } from './utils'
 import registerControls from './controls'
 
 import './styles'
 
-const width = window.innerWidth
-const height = window.innerHeight
+const screenWidth = window.innerWidth
+const screenHeight = window.innerHeight
+const worldWidth = 3000
+const worldHeight = 3000
 const score = new ScoreManager()
-const app = new Application(width, height, { antialias: true })
+const app = new Application(screenWidth, screenHeight, { antialias: true })
 document.querySelector('.canvas').appendChild(app.view)
 
-const asteroids = new AsteroidManager(width, height)
-const bullets = new BulletManager(width, height)
-const ship = new Ship(width / 2, height / 2)
+const viewport = new Viewport({
+  screenWidth,
+  screenHeight,
+  worldWidth,
+  worldHeight,
+})
+app.stage.addChild(viewport)
 
-app.stage.addChild(bullets)
-app.stage.addChild(asteroids)
-app.stage.addChild(ship)
+const asteroids = new AsteroidManager(worldWidth, worldHeight, viewport)
+const bullets = new BulletManager(worldWidth, worldHeight)
+const ship = new Ship(worldWidth / 2, worldHeight / 2)
+const starField = new StarField(worldWidth, worldHeight)
+
+viewport.addChild(starField)
+viewport.addChild(bullets)
+viewport.addChild(asteroids)
+viewport.addChild(ship)
+viewport.follow(ship)
 
 const start = () => {
   if (app.isRunning) return
@@ -47,7 +61,10 @@ registerControls({ start, stop })
 
 app.ticker.add((delta) => {
   ship.update(delta)
-  clamp({ width, height })(ship)
+  clamp({
+    width: worldWidth,
+    height: worldHeight,
+  })(ship)
 
   bullets.update(delta)
   asteroids.update(delta)
